@@ -5,15 +5,55 @@
 <head>
   <meta charset="utf-8">
   <script type="text/javascript">
-
+    basketArray = [
+      "coin with a face, with four horns", //0
+      "Rosette icon", //1
+      "Amphora with a standing collar", //2
+      "Black whip, with snake detailing", //3
+      "a bull with four horns",//4
+      "a four-armed figure", //5
+      "a Kylix(a drinking cup)", //6
+      "Hooded Figure", //7
+      "Hammer", //8
+      "Bear cub",//9
+      "Carved Lightning",//10
+      "Walking stick carved of bone",//11
+      "Spindle",//12
+      "Sun",//13
+      "Winged Helm", //14
+      "Ship", //15
+      "Oak Tree" //16
+    ]
+    Answers = {
+      "0": "",
+      "1": basketArray[5],//Kruphix -- a four armed figure
+      "2": basketArray[10],//Keranos  "Carved Lightning"  //Solved!
+      "3": basketArray[15],//"Thassa"  "Ship" //Solved!
+      "4": basketArray[12],//Klothys  Spindle  //Solved!
+      "5": basketArray[13],//Heliod  Sun  //Solved!
+      "6": basketArray[14],//Iroas Winged Helm
+      "7": basketArray[9],//Karametra    Bear cub  //Solved!
+      "8": basketArray[16],//Nylea    Oak Tree //Solved!
+      "9": basketArray[8],//Purphoros  //  Hammer Solved!
+      "10": basketArray[3],//Erebos Black whip, with snake detailing //Solved!
+      "11": basketArray[7],//Phenax  Hooded Figure  //Solved! 
+      "12": basketArray[6],//Pharika  a Kylix/Drinking cup 
+      "13": basketArray[4],//Mogis  a bull with four horns
+      "14": basketArray[2],//Ephara  Amphora with a standing collar
+      "15": basketArray[11],//Athreos //Solved!  Walking stick of bone
+      "16": basketArray[1],//Aredite  Rosette icon
+      "17": basketArray[0],//Xenagos coin with a face, with four horns
+    }
     // Wait for the page to load first
     window.onload = function () {
 
       //Get a reference to the link on the page
       // with an id of "mylink"
       window.onclick = e => {
-        console.log(e.target);  // to get the element
-        document.getElementById("Riddle").innerHTML = e.target.id;  // to get the element tag name alone
+        console.log(e.target.id);  // to get the element
+        if (e.target.id.includes("<br />")) {
+          document.getElementById("Riddle").innerHTML = e.target.id;  // to get the element tag name alone
+        }
       }
 
     }
@@ -25,12 +65,14 @@
       overflow-y: scroll;
       overflow-x: scroll;
     }
-    #map{
+
+    #map {
       float: left;
     }
-    #information{
+
+    #information {
       float: left;
-      background-color:blanchedalmond;
+      background-color: blanchedalmond;
       width: 300px;
       height: 900px;
     }
@@ -43,48 +85,90 @@
     <img src="TempleIsland.jpg" usemap="#Image-map">
     <map name="Image-map">
       <area target="_blank" id="OpeningRiddle" title="Opening Riddle" coords="419,554,305,632" shape="rect">
-      <area target="_blank" title="Kruphix" id="Nearly a victory, Quickly I pass, 
-A request of the chair, I’m silver, not brass." coords="682,406,70" shape="circle">
-      <area target="_blank" title="Keranos" id="
-      From the sky I strike with a terrible crash. 
-      seek not the sound; find the flash" coords="913,268,63" shape="circle">
-      <area target="_blank" title="Thassa" id="Bright as diamonds, Loud as thunder,
-      Never still, A thing of wonder." coords="916,623,66" shape="circle">
-      <area target="_blank" title="Klothys" id="What is it that when given one,
-      you’ll have either two or none" coords="1156,636,60" shape="circle">
-      <area target="_blank" title="Heliod" id="Never resting, never still.
-      Moving silently from hill to hill.
-      It does not walk, run or trot.
-      All is cool where it is not." coords="1417,558,67" shape="circle">
-      <area target="_blank" title="Iroas" id="I am born in fear, raised in truth,
-      and I come to my own in deed.
-      When comes a time that I’m called forth,
-      I come to serve the cause of need." coords="1697,708,63" shape="circle">
-      <area target="_blank" title="Karametra" id="Soft and cuddly, I'll pull on your heart.
-      But take my last name and I'll tear you apart." coords="634,739,60" shape="circle">
-      <area target="_blank" title="Nylea" id="People come and watch, from far away to see
-      Burning brightly, almost catching fire,
-      The colder it is the hotter I'll be.
-      Then I die." coords="919,830,62" shape="circle">
-      <area target="_blank" title="Purphoros" id="The thunder comes before the lightning,
-      And the lightning comes before the cloud,
-      The rain dries all the land it touches,
-      Wrapping the earth in a blood red shroud." coords="1159,419,68" shape="circle">
+      <area target="_blank" title="1"
+        id="Nearly a victory, Quickly I pass, <br /> A request of the chair, I’m silver, not brass." coords="682,406,70"
+        shape="circle">
+      <area target="_blank" title="2"
+        id="From the sky I strike with a terrible crash. <br />seek not the sound; find the flash" coords="913,268,63"
+        shape="circle">
+      <area target="_blank" title="3" id="Bright as diamonds, Loud as thunder,<br />Never still, A thing of wonder."
+        coords="916,623,66" shape="circle">
+      <area target="_blank" title="4" id="What is it that when given one, <br />you’ll have either two or none"
+        coords="1156,636,60" shape="circle">
+      <area target="_blank" title="5"
+        id="Never resting, never still.<br />Moving silently from hill to hill.<br />It does not walk, run or trot.<br />All is cool where it is not."
+        coords="1417,558,67" shape="circle">
+      <area target="_blank" title="6"
+        id="I am born in fear, raised in truth,<br />and I come to my own in deed.<br />When comes a time that I’m called forth,<br />I come to serve the cause of need."
+        coords="1697,708,63" shape="circle">
+      <area target="_blank" title="7"
+        id="Soft and cuddly, I'll pull on your heart.<br />But take my last name and I'll tear you apart."
+        coords="634,739,60" shape="circle">
+      <area target="_blank" title="8"
+        id="People come and watch, from far away to see<br />Burning brightly, almost catching fire,<br />The colder it is the hotter I'll be.<br />Then I die."
+        coords="919,830,62" shape="circle">
+      <area target="_blank" title="9"
+        id="The thunder comes before the lightning,<br />And the lightning comes before the cloud,<br />The rain dries all the land it touches,<br />Wrapping the earth in a blood red shroud."
+        coords="1159,419,68" shape="circle">
+      <area target="_blank" title="10" id="A rich man needs it, A poor man has it.<br />and if you eat it you will die."
+        coords="1126,927,60" shape="circle">
+      <area target="_blank" title="11" id="
+      I was a gift to the one but poison to the others, Favored sign and hated symbol. </br>Of many i was not short; and others talk of far to long.<br />Stolen and torn; and then became something to mourn
+      " coords="769,994,62" shape="circle">
+      <area target="_blank" title="12" id="" coords="1246,1172,62" shape="circle"> <!-- Pharika//Drinking Cup-->
+      <area target="_blank" title="13" id="" coords="1534,1057,65" shape="circle"> <!-- Mogis// Bull with Four Horns-->
+      <area target="_blank" title="14" id="" coords="1474,313,64" shape="circle">  <!-- Ephara//Amphora with a standing collar-->
 
-      <area target="_blank" title="Erebos" id="" coords="1126,927,60" shape="circle">
-      <area target="_blank" title="Pharika" id="" coords="769,994,62" shape="circle">
-      <area target="_blank" title="Phenax" id="" coords="1246,1172,62" shape="circle">
-      <area target="_blank" title="Mogis" id="" coords="1534,1057,65" shape="circle">
-      <area target="_blank" title="Ephara" id="" coords="1474,313,64" shape="circle">
-      <area target="_blank" title="Athreos" id="" coords="976,1105,61" shape="circle">
-      <area target="_blank" title="Aredite" id="" coords="1378,826,63" shape="circle">
+      <area target="_blank" title="15"
+        id="The city at the end of all roads am I, yet I may only be reached by water.<br /> One guard stands watch at my gates, yet six eyes keep careful vigil. "
+        coords="976,1105,61" shape="circle">
+      <area target="_blank" title="16"
+        id="My first is foremost legally, <br /> My second circles outwardly,<br /> My third leads all in victory,<br />  My fourth twice ends a nominee"
+        coords="1378,826,63" shape="circle"> <!-- Aredite-->
 
 
     </map>
   </div>
   <div id="information">
     <h1>Riddle on the Column:</h1><br />
-    <span id="Riddle"></span>
+    <div id="Riddle"></div>
+    <h3>Answer</h3>
+    <select>
+      <option>coin with a four horned face </option>
+      <!--Xenagos-->
+      <option>Rosette icon</option> <!-- Aredite-->
+      <option>Amphora with a standing collar</option>
+      <!--Ephara-->
+      <option>Black whip, with snake detailing</option>
+      <!--Erebos-->
+      <option>a bull with four horns</option>
+      <!--Mogis-->
+      <option>a kylix(drinking cup)</option>
+      <!--Pharika-->
+      <option>a little stone rat</option>
+      <!--Phenax-->
+      <option>Hooded Figure</option>
+      <!--Kruphix -->
+      <option>Hammer</option>
+      <!--Purphoros-->
+      <option>Bear cub</option>
+      <!--Karametra-->
+      <option>Carved Lightning</option>
+      <!--Keranos-->
+      <option>Walking stick</option>
+      <!--Athreos-->
+      <option>Spindle</option>
+      <!--Klothys-->
+      <option>Sun</option>
+      <!--Heliod-->
+      <option>Winged Helm</option>
+      <!--Iroas-->
+      <option>Ship</option>
+      <!--Thassa-->
+      <option>Oak Tree</option>
+      <!--Nylea-->
+      <button>Choice</button>
+    </select>
   </div>
 </body>
 
