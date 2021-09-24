@@ -6,23 +6,23 @@
   <meta charset="utf-8">
   <script type="text/javascript">
     basketArray = [
-      "coin with a face, with four horns", //0
-      "Rosette icon", //1
-      "Amphora with a standing collar", //2
-      "Black whip, with snake detailing", //3
-      "a bull with four horns",//4
-      "a four-armed figure", //5
-      "a Kylix(a drinking cup)", //6
-      "Hooded Figure", //7
-      "Hammer", //8
-      "Bear cub",//9
+      "A coin with a face, with four horns", //0
+      "A half-dome, covered in Rosettes", //1
+      "A tiny Amphora with a standing collar", //2
+      "A small Black whip, with snake detailing", //3
+      "A sculpted bull; with four horns",//4
+      "A four-armed figure", //5
+      "A Kylix(a drinking cup)", //6
+      "A hooded Figure", //7
+      "A small hammer", //8
+      "A carved stone bear cub",//9
       "Carved Lightning",//10
-      "Walking stick carved of bone",//11
-      "Spindle",//12
-      "Sun",//13
-      "Winged Helm", //14
-      "Ship", //15
-      "Oak Tree" //16
+      "A minature walking stick carved of bone",//11
+      "A small spindle",//12
+      "A model of the sun",//13
+      "A small winged helm", //14
+      "A toy ship", //15
+      "A figure of an oak tree" //16
     ]
     Answers = {
       "0": "",
@@ -45,14 +45,37 @@
       "17": basketArray[0],//Xenagos coin with a face, with four horns
     }
     // Wait for the page to load first
-    window.onload = function () {
 
+    loadSelect = function(){
+      var Select = document.getElementById("answers");
+      for (let i = 0; i < basketArray.length; i++) {
+        element = basketArray[i];
+        var o = document.createElement("option")
+        o.text = element
+        Select.options.add(o, i + 1)
+      }
+    }
+    //remove from the list of selectable//disable? once it has been chosen as the right one. 
+    //track a list of Riddles and solutions?
+        //move into cookies to track that?
+    window.onload = function () {
+      //generate select options
+      loadSelect()
+
+      document.getElementById("answerClick").disabled = true;
       //Get a reference to the link on the page
       // with an id of "mylink"
       window.onclick = e => {
-        console.log(e.target.id);  // to get the element
         if (e.target.id.includes("<br />")) {
-          document.getElementById("Riddle").innerHTML = e.target.id;  // to get the element tag name alone
+          document.getElementById("Riddle").innerHTML = e.target.id;
+
+          if (!(e.target.title == "0")) {
+            document.getElementById("answerClick").disabled = false;
+          }
+          else {
+            document.getElementById("answerClick").disabled = true;
+          }
+          // to get the element tag name alone
         }
       }
 
@@ -84,7 +107,16 @@
   <div id="map" class="scrollable">
     <img src="TempleIsland.jpg" usemap="#Image-map">
     <map name="Image-map">
-      <area target="_blank" id="OpeningRiddle" title="Opening Riddle" coords="419,554,305,632" shape="rect">
+      <area target="_blank" title="0"
+        id="My challenge has made men throughout time stumble,I have defeated kings and left wise men humble,
+      
+      <br />You see me now, but I am most often heard,and have killed men when with bullets paired,
+      
+      <br />You might break a sweat when fighting with me, but I'll exert no pressure on your body,
+      
+      <br /> a with a direct approach you can never find victory, work laterally rather than literally.
+      <br />Many choices; many paths. each must decide; or face their wrath  <br /><br /><br /> Click on a pillar to investigate"
+        coords="419,554,305,632" shape="rect">
       <area target="_blank" title="1"
         id="Nearly a victory, Quickly I pass, <br /> A request of the chair, I’m silver, not brass." coords="682,406,70"
         shape="circle">
@@ -115,60 +147,27 @@
       <area target="_blank" title="11" id="
       I was a gift to the one but poison to the others, Favored sign and hated symbol. </br>Of many i was not short; and others talk of far to long.<br />Stolen and torn; and then became something to mourn
       " coords="769,994,62" shape="circle">
-      <area target="_blank" title="12" id="" coords="1246,1172,62" shape="circle"> <!-- Pharika//Drinking Cup-->
-      <area target="_blank" title="13" id="" coords="1534,1057,65" shape="circle"> <!-- Mogis// Bull with Four Horns-->
-      <area target="_blank" title="14" id="" coords="1474,313,64" shape="circle">  <!-- Ephara//Amphora with a standing collar-->
-
+      <area target="_blank" title="12" id="As healing as death, As destructive as life  <br />Causer of both; An institutioner of strife" coords="1246,1172,62" shape="circle"> 
+      <area target="_blank" title="13" id="I am there at the beginning of life<br /> Pouring like wine, A swollen line.<br />Freeing me can bring both war and strife," coords="1534,1057,65" shape="circle">
+      <area target="_blank" title="14" id="What’s more precious than rubys, more lasting than gold, <br />what can never be traded stolen or sold,<br />what comes with great effort, takes time to gain<br />but then once yours; will serve you again and again?" coords="1474,313,64" shape="circle">
       <area target="_blank" title="15"
         id="The city at the end of all roads am I, yet I may only be reached by water.<br /> One guard stands watch at my gates, yet six eyes keep careful vigil. "
         coords="976,1105,61" shape="circle">
       <area target="_blank" title="16"
         id="My first is foremost legally, <br /> My second circles outwardly,<br /> My third leads all in victory,<br />  My fourth twice ends a nominee"
-        coords="1378,826,63" shape="circle"> <!-- Aredite-->
-
-
+        coords="1378,826,63" shape="circle">
+        
+        
+        
     </map>
   </div>
   <div id="information">
-    <h1>Riddle on the Column:</h1><br />
+    <h1>Riddle of the stone:</h1><br />
     <div id="Riddle"></div>
     <h3>Answer</h3>
-    <select>
-      <option>coin with a four horned face </option>
-      <!--Xenagos-->
-      <option>Rosette icon</option> <!-- Aredite-->
-      <option>Amphora with a standing collar</option>
-      <!--Ephara-->
-      <option>Black whip, with snake detailing</option>
-      <!--Erebos-->
-      <option>a bull with four horns</option>
-      <!--Mogis-->
-      <option>a kylix(drinking cup)</option>
-      <!--Pharika-->
-      <option>a little stone rat</option>
-      <!--Phenax-->
-      <option>Hooded Figure</option>
-      <!--Kruphix -->
-      <option>Hammer</option>
-      <!--Purphoros-->
-      <option>Bear cub</option>
-      <!--Karametra-->
-      <option>Carved Lightning</option>
-      <!--Keranos-->
-      <option>Walking stick</option>
-      <!--Athreos-->
-      <option>Spindle</option>
-      <!--Klothys-->
-      <option>Sun</option>
-      <!--Heliod-->
-      <option>Winged Helm</option>
-      <!--Iroas-->
-      <option>Ship</option>
-      <!--Thassa-->
-      <option>Oak Tree</option>
-      <!--Nylea-->
-      <button>Choice</button>
+    <select id="answers">
     </select>
+    <button id="answerClick">Choice</button>
   </div>
 </body>
 
