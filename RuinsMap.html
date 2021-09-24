@@ -25,28 +25,28 @@
       "A figure of an oak tree" //16
     ]
     Answers = {
-      "0": "",
-      "1": basketArray[5],//Kruphix -- a four armed figure
-      "2": basketArray[10],//Keranos  "Carved Lightning"  //Solved!
-      "3": basketArray[15],//"Thassa"  "Ship" //Solved!
-      "4": basketArray[12],//Klothys  Spindle  //Solved!
-      "5": basketArray[13],//Heliod  Sun  //Solved!
-      "6": basketArray[14],//Iroas Winged Helm
-      "7": basketArray[9],//Karametra    Bear cub  //Solved!
-      "8": basketArray[16],//Nylea    Oak Tree //Solved!
-      "9": basketArray[8],//Purphoros  //  Hammer Solved!
-      "10": basketArray[3],//Erebos Black whip, with snake detailing //Solved!
-      "11": basketArray[7],//Phenax  Hooded Figure  //Solved! 
-      "12": basketArray[6],//Pharika  a Kylix/Drinking cup 
-      "13": basketArray[4],//Mogis  a bull with four horns
-      "14": basketArray[2],//Ephara  Amphora with a standing collar
-      "15": basketArray[11],//Athreos //Solved!  Walking stick of bone
-      "16": basketArray[1],//Aredite  Rosette icon
-      "17": basketArray[0],//Xenagos coin with a face, with four horns
+      "1": "",
+      "2": basketArray[5],//Kruphix 1-2 -- a four armed figure
+      "5": basketArray[10],//Keranos 2 -5 "Carved Lightning"  //Solved!
+      "6": basketArray[15],//"Thassa" 3 -6  "Ship" //Solved!
+      "10": basketArray[12],//Klothys  4 -10 Spindle  //Solved!
+      "14": basketArray[13],//Heliod 5 -15  Sun  //Solved!
+      "17": basketArray[14],//Iroas 6 -17 Winged Helm
+      "3": basketArray[9],//Karametra 7 - 3    Bear cub  //Solved!
+      "7": basketArray[16],//Nylea  8 -7   Oak Tree //Solved!
+      "9": basketArray[8],//Purphoros 9 -9  //  Hammer Solved!
+      "11": basketArray[3],//Erebos 10 -11 Black whip, with snake detailing //Solved!
+      "4": basketArray[7],//Phenax  11 -4 Hooded Figure  //Solved! 
+      "12": basketArray[6],//Pharika 12 - 12 a Kylix/Drinking cup 
+      "16": basketArray[4],//Mogis  13 - 16 a bull with four horns
+      "13": basketArray[2],//Ephara 14 -13  Amphora with a standing collar
+      "8": basketArray[11],//Athreos 15 - 8//Solved!  Walking stick of bone
+      "15": basketArray[1],//Aredite  16 - 17 Rosette icon
+      "18": basketArray[0],//Xenagos 17 - 18 coin with a face, with four horns
     }
     // Wait for the page to load first
 
-    loadSelect = function(){
+    loadSelect = function () {
       var Select = document.getElementById("answers");
       for (let i = 0; i < basketArray.length; i++) {
         element = basketArray[i];
@@ -57,10 +57,12 @@
     }
     //remove from the list of selectable//disable? once it has been chosen as the right one. 
     //track a list of Riddles and solutions?
-        //move into cookies to track that?
+    //move into cookies to track that?
     window.onload = function () {
       //generate select options
       loadSelect()
+      //Starting Display
+      document.getElementById("Riddle").innerHTML = "My challenge has made men throughout time stumble,I have defeated kings and left wise men humble, <br />You see me now, but I am most often heard,and have killed men when with bullets paired,<br />You might break a sweat when fighting with me, but I'll exert no pressure on your body, <br /> with a direct approach you can never find victory, work laterally rather than literally.<br />Many choices; many paths. each must decide; or face their wrath  <br /><br /><br /> Click on a pillar to investigate"
 
       document.getElementById("answerClick").disabled = true;
       //Get a reference to the link on the page
@@ -84,7 +86,7 @@
   <style type="text/css">
     .scrollable {
       width: 900px;
-      height: 900px;
+      height: 98vh;
       overflow-y: scroll;
       overflow-x: scroll;
     }
@@ -96,8 +98,17 @@
     #information {
       float: left;
       background-color: blanchedalmond;
-      width: 300px;
-      height: 900px;
+      width: 350px;
+      height: 98vh;
+    }
+
+    #Riddle {
+
+      height: 40vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
   </style>
   <title>Ruins Riddle</title>
@@ -107,58 +118,64 @@
   <div id="map" class="scrollable">
     <img src="TempleIsland.jpg" usemap="#Image-map">
     <map name="Image-map">
-      <area target="_blank" title="0"
+      <area target="_blank" title="1"
         id="My challenge has made men throughout time stumble,I have defeated kings and left wise men humble,
       
       <br />You see me now, but I am most often heard,and have killed men when with bullets paired,
       
       <br />You might break a sweat when fighting with me, but I'll exert no pressure on your body,
       
-      <br /> a with a direct approach you can never find victory, work laterally rather than literally.
+      <br />with a direct approach you can never find victory, work laterally rather than literally.
       <br />Many choices; many paths. each must decide; or face their wrath  <br /><br /><br /> Click on a pillar to investigate"
         coords="419,554,305,632" shape="rect">
-      <area target="_blank" title="1"
+      <area target="_blank" title="2"
         id="Nearly a victory, Quickly I pass, <br /> A request of the chair, I’m silver, not brass." coords="682,406,70"
         shape="circle">
-      <area target="_blank" title="2"
+      <area target="_blank" title="5"
         id="From the sky I strike with a terrible crash. <br />seek not the sound; find the flash" coords="913,268,63"
         shape="circle">
-      <area target="_blank" title="3" id="Bright as diamonds, Loud as thunder,<br />Never still, A thing of wonder."
+      <area target="_blank" title="6" id="Bright as diamonds, Loud as thunder,<br />Never still, A thing of wonder."
         coords="916,623,66" shape="circle">
-      <area target="_blank" title="4" id="What is it that when given one, <br />you’ll have either two or none"
+      <area target="_blank" title="10" id="What is it that when given one, <br />you’ll have either two or none"
         coords="1156,636,60" shape="circle">
-      <area target="_blank" title="5"
+      <area target="_blank" title="14"
         id="Never resting, never still.<br />Moving silently from hill to hill.<br />It does not walk, run or trot.<br />All is cool where it is not."
         coords="1417,558,67" shape="circle">
-      <area target="_blank" title="6"
+      <area target="_blank" title="17"
         id="I am born in fear, raised in truth,<br />and I come to my own in deed.<br />When comes a time that I’m called forth,<br />I come to serve the cause of need."
         coords="1697,708,63" shape="circle">
-      <area target="_blank" title="7"
+      <area target="_blank" title="3"
         id="Soft and cuddly, I'll pull on your heart.<br />But take my last name and I'll tear you apart."
         coords="634,739,60" shape="circle">
-      <area target="_blank" title="8"
+      <area target="_blank" title="7"
         id="People come and watch, from far away to see<br />Burning brightly, almost catching fire,<br />The colder it is the hotter I'll be.<br />Then I die."
         coords="919,830,62" shape="circle">
       <area target="_blank" title="9"
         id="The thunder comes before the lightning,<br />And the lightning comes before the cloud,<br />The rain dries all the land it touches,<br />Wrapping the earth in a blood red shroud."
         coords="1159,419,68" shape="circle">
-      <area target="_blank" title="10" id="A rich man needs it, A poor man has it.<br />and if you eat it you will die."
+      <area target="_blank" title="11" id="A rich man needs it, A poor man has it.<br />and if you eat it you will die."
         coords="1126,927,60" shape="circle">
-      <area target="_blank" title="11" id="
+      <area target="_blank" title="4" id="
       I was a gift to the one but poison to the others, Favored sign and hated symbol. </br>Of many i was not short; and others talk of far to long.<br />Stolen and torn; and then became something to mourn
       " coords="769,994,62" shape="circle">
-      <area target="_blank" title="12" id="As healing as death, As destructive as life  <br />Causer of both; An institutioner of strife" coords="1246,1172,62" shape="circle"> 
-      <area target="_blank" title="13" id="I am there at the beginning of life<br /> Pouring like wine, A swollen line.<br />Freeing me can bring both war and strife," coords="1534,1057,65" shape="circle">
-      <area target="_blank" title="14" id="What’s more precious than rubys, more lasting than gold, <br />what can never be traded stolen or sold,<br />what comes with great effort, takes time to gain<br />but then once yours; will serve you again and again?" coords="1474,313,64" shape="circle">
-      <area target="_blank" title="15"
+      <area target="_blank" title="12"
+        id="As healing as death, As destructive as life  <br />Causer of both; An institutioner of strife"
+        coords="1246,1172,62" shape="circle">
+      <area target="_blank" title="16"
+        id="I am there at the beginning of life<br /> Pouring like wine, A swollen line.<br />Freeing me can bring both war and strife,"
+        coords="1534,1057,65" shape="circle">
+      <area target="_blank" title="13"
+        id="What’s more precious than rubys, more lasting than gold, <br />what can never be traded stolen or sold,<br />what comes with great effort, takes time to gain<br />but then once yours; will serve you again and again?"
+        coords="1474,313,64" shape="circle">
+      <area target="_blank" title="8"
         id="The city at the end of all roads am I, yet I may only be reached by water.<br /> One guard stands watch at my gates, yet six eyes keep careful vigil. "
         coords="976,1105,61" shape="circle">
-      <area target="_blank" title="16"
+      <area target="_blank" title="15"
         id="My first is foremost legally, <br /> My second circles outwardly,<br /> My third leads all in victory,<br />  My fourth twice ends a nominee"
         coords="1378,826,63" shape="circle">
-        
-        
-        
+
+
+
     </map>
   </div>
   <div id="information">
