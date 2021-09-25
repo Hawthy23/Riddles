@@ -24,60 +24,94 @@
       "A toy ship", //15
       "A figure of an oak tree" //16
     ]
-    Answers = {
-      "1": "",
-      "2": basketArray[5],//Kruphix 1-2 -- a four armed figure
-      "5": basketArray[10],//Keranos 2 -5 "Carved Lightning"  //Solved!
-      "6": basketArray[15],//"Thassa" 3 -6  "Ship" //Solved!
-      "10": basketArray[12],//Klothys  4 -10 Spindle  //Solved!
-      "14": basketArray[13],//Heliod 5 -15  Sun  //Solved!
-      "17": basketArray[14],//Iroas 6 -17 Winged Helm
-      "3": basketArray[9],//Karametra 7 - 3    Bear cub  //Solved!
-      "7": basketArray[16],//Nylea  8 -7   Oak Tree //Solved!
-      "9": basketArray[8],//Purphoros 9 -9  //  Hammer Solved!
-      "11": basketArray[3],//Erebos 10 -11 Black whip, with snake detailing //Solved!
-      "4": basketArray[7],//Phenax  11 -4 Hooded Figure  //Solved! 
-      "12": basketArray[6],//Pharika 12 - 12 a Kylix/Drinking cup 
-      "16": basketArray[4],//Mogis  13 - 16 a bull with four horns
-      "13": basketArray[2],//Ephara 14 -13  Amphora with a standing collar
-      "8": basketArray[11],//Athreos 15 - 8//Solved!  Walking stick of bone
-      "15": basketArray[1],//Aredite  16 - 17 Rosette icon
-      "18": basketArray[0],//Xenagos 17 - 18 coin with a face, with four horns
-    }
+   
+    Answers = [
+      "",
+      "",
+      basketArray[5],//Kruphix 1-2 -- a four armed figure
+      basketArray[9],//Karametra 7 - 3    Bear cub  //Solved!
+      basketArray[7],//Phenax  11 -4 Hooded Figure  //Solved! 
+      basketArray[10],//Keranos 2 -5 "Carved Lightning"  //Solved!
+      basketArray[15],//"Thassa" 3 -6  "Ship" //Solved!
+      basketArray[16],//Nylea  8 -7   Oak Tree //Solved!
+      basketArray[11],//Athreos 15 - 8//Solved!  Walking stick of bone
+      basketArray[8],//Purphoros 9 -9  //  Hammer Solved!
+      basketArray[12],//Klothys  4 -10 Spindle  //Solved!
+      basketArray[3],//Erebos 10 -11 Black whip, with snake detailing //Solved!
+      basketArray[6],//Pharika 12 - 12 a Kylix/Drinking cup
+      basketArray[2],//Ephara 14 -13  Amphora with a standing collar
+      basketArray[13],//Heliod 5 -15  Sun  //Solved!
+      basketArray[1],//Aredite  16 - 17 Rosette icon
+      basketArray[4],//Mogis  13 - 16 a bull with four horns
+      basketArray[14],//Iroas 6 -17 Winged Helm  
+      basketArray[0],//Xenagos 17 - 18 coin with a face, with four horns
+  ]
     // Wait for the page to load first
 
-    loadSelect = function () {
-      var Select = document.getElementById("answers");
+    loadSelect = function (Select) {
+
       for (let i = 0; i < basketArray.length; i++) {
         element = basketArray[i];
-        var o = document.createElement("option")
-        o.text = element
-        Select.options.add(o, i + 1)
+        var o = document.createElement("option");
+        o.value = element;
+        o.text = element;
+        Select.options.add(o, i + 1);
       }
     }
+
     //remove from the list of selectable//disable? once it has been chosen as the right one. 
     //track a list of Riddles and solutions?
     //move into cookies to track that?
     window.onload = function () {
-      //generate select options
-      loadSelect()
-      //Starting Display
-      document.getElementById("Riddle").innerHTML = "My challenge has made men throughout time stumble,I have defeated kings and left wise men humble, <br />You see me now, but I am most often heard,and have killed men when with bullets paired,<br />You might break a sweat when fighting with me, but I'll exert no pressure on your body, <br /> with a direct approach you can never find victory, work laterally rather than literally.<br />Many choices; many paths. each must decide; or face their wrath  <br /><br /><br /> Click on a pillar to investigate"
 
-      document.getElementById("answerClick").disabled = true;
+
+      //Starting Display
+      document.getElementById("instruct").innerHTML = "My challenge has made men throughout time stumble,I have defeated kings and left wise men humble, <br />You see me now, but I am most often heard,and have killed men when with bullets paired,<br />You might break a sweat when fighting with me, but I'll exert no pressure on your body, <br /> with a direct approach you can never find victory, work laterally rather than literally.<br />Many choices; many paths. each must decide; or face their wrath  <br /><br /><br /> Click on a pillar to investigate"
+      document.getElementById("Riddle").style.display = "none"
+      document.getElementById("Answer").style.display = "none"
+      
+      document.getElementById("answerButton").onclick = 
+      function (params) {
+        str = document.getElementById("place").innerHTML;
+        AnswerKey = str.split(" ")[3].split(":")[0];
+        answer = Answers[AnswerKey];
+        choice = document.getElementById("select").value;
+        res = "Wrong!!";
+        if (answer == choice){
+          res = "Correct!!";
+        }
+        document.getElementById("Result").innerHTML = res;
+      }
       //Get a reference to the link on the page
       // with an id of "mylink"
       window.onclick = e => {
         if (e.target.id.includes("<br />")) {
-          document.getElementById("Riddle").innerHTML = e.target.id;
 
-          if (!(e.target.title == "0")) {
-            document.getElementById("answerClick").disabled = false;
+
+          if (!(e.target.title == "1")) {
+            document.getElementById("place").innerHTML = "Riddle of column " + e.target.title + ":"
+            document.getElementById("Riddle").innerHTML = e.target.id
+            document.getElementById("instruct").style.display = "none"
+            document.getElementById("Riddle").style.display= "flex"
+      document.getElementById("Answer").style.display = "inline"
+      
+
+            //generate select options
+            var s = document.getElementById("select");
+
+
+            loadSelect(s);
+            parent = document.getElementById("Answer")
+            //button click to submit answer
           }
           else {
-            document.getElementById("answerClick").disabled = true;
+            document.getElementById("place").innerHTML = "Riddle of the stones:"
+            document.getElementById("instruct").style.display = "block"
+            document.getElementById("Riddle").style.display = "none"
+            document.getElementById("Answer").style.display = "none"
+            
           }
-          // to get the element tag name alone
+
         }
       }
 
@@ -103,7 +137,13 @@
     }
 
     #Riddle {
-
+      height: 30vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    #instruct {
       height: 40vh;
       display: flex;
       justify-content: center;
@@ -119,14 +159,7 @@
     <img src="TempleIsland.jpg" usemap="#Image-map">
     <map name="Image-map">
       <area target="_blank" title="1"
-        id="My challenge has made men throughout time stumble,I have defeated kings and left wise men humble,
-      
-      <br />You see me now, but I am most often heard,and have killed men when with bullets paired,
-      
-      <br />You might break a sweat when fighting with me, but I'll exert no pressure on your body,
-      
-      <br />with a direct approach you can never find victory, work laterally rather than literally.
-      <br />Many choices; many paths. each must decide; or face their wrath  <br /><br /><br /> Click on a pillar to investigate"
+        id="My challenge has made men throughout time stumble,I have defeated kings and left wise men humble,<br />You see me now, but I am most often heard,and have killed men when with bullets paired,<br />You might break a sweat when fighting with me, but I'll exert no pressure on your body,<br />with a direct approach you can never find victory, work laterally rather than literally.<br />Many choices; many paths. each must decide; or face their wrath  <br /><br /><br /> Click on a pillar to investigate"
         coords="419,554,305,632" shape="rect">
       <area target="_blank" title="2"
         id="Nearly a victory, Quickly I pass, <br /> A request of the chair, I’m silver, not brass." coords="682,406,70"
@@ -179,13 +212,17 @@
     </map>
   </div>
   <div id="information">
-    <h1>Riddle of the stone:</h1><br />
+    <h1 id="place">Riddle of the stones:</h1><br />
+    <div id ="instruct"></div>
     <div id="Riddle"></div>
-    <h3>Answer</h3>
-    <select id="answers">
-    </select>
-    <button id="answerClick">Choice</button>
-  </div>
+    <div id="Answer">
+      <h3>Answer</h3>
+      <select id="select"></select>
+      <button id = "answerButton">Select</button>
+      <br /> <br /><br />
+      <span id = "Result" style="text-align: center;"></span>
+
+    </div>
 </body>
 
 </html>
