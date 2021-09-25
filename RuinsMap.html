@@ -66,6 +66,9 @@
 
 
       //Starting Display
+      var s = document.getElementById("select");
+      loadSelect(s);
+      
       document.getElementById("instruct").innerHTML = "My challenge has made men throughout time stumble,I have defeated kings and left wise men humble, <br />You see me now, but I am most often heard,and have killed men when with bullets paired,<br />You might break a sweat when fighting with me, but I'll exert no pressure on your body, <br /> with a direct approach you can never find victory, work laterally rather than literally.<br />Many choices; many paths. each must decide; or face their wrath  <br /><br /><br /> Click on a pillar to investigate"
       document.getElementById("Riddle").style.display = "none"
       document.getElementById("Answer").style.display = "none"
@@ -85,23 +88,21 @@
       //Get a reference to the link on the page
       // with an id of "mylink"
       window.onclick = e => {
+    
         if (e.target.id.includes("<br />")) {
 
-
+          
           if (!(e.target.title == "1")) {
             document.getElementById("place").innerHTML = "Riddle of column " + e.target.title + ":"
             document.getElementById("Riddle").innerHTML = e.target.id
             document.getElementById("instruct").style.display = "none"
             document.getElementById("Riddle").style.display= "flex"
       document.getElementById("Answer").style.display = "inline"
+      document.getElementById("Result").innerHTML =""
       
 
             //generate select options
-            var s = document.getElementById("select");
 
-
-            loadSelect(s);
-            parent = document.getElementById("Answer")
             //button click to submit answer
           }
           else {
