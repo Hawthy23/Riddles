@@ -1,0 +1,30 @@
+body,
+div {
+    padding: 0px;
+    margin: 0px;
+}
+
+#nav {
+    text-align: center;
+    float: left;
+    width: 20%;
+    min-height: 100vh;
+    background-color: tan;
+}
+#bar {
+    
+    position: absolute;
+    bottom: 5px;
+}
+#map {
+    float: left;
+    width: 79%;
+    padding: 0px;
+    margin: 0px;
+    height: 719px;
+}
+#MapImage{
+  max-width: 99%;  
+  max-height: 100vh;
+  min-height: 90vh;
+}
