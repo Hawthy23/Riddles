@@ -24,7 +24,7 @@
       "A toy ship", //15
       "A figure of an oak tree" //16
     ]
-   
+
     Answers = [
       "",
       "",
@@ -45,7 +45,7 @@
       basketArray[4],//Mogis  16 a bull with four horns
       basketArray[14],//Iroas 17 Winged Helm  
       basketArray[0],//Xenagos 18 coin with a face, with four horns
-  ]
+    ]
     // Wait for the page to load first
 
     loadSelect = function (Select) {
@@ -68,38 +68,38 @@
       //Starting Display
       var s = document.getElementById("select");
       loadSelect(s);
-      
+
       document.getElementById("instruct").innerHTML = "My challenge has made men throughout time stumble,I have defeated kings and left wise men humble, <br />You see me now, but I am most often heard,and have killed men when with bullets paired,<br />You might break a sweat when fighting with me, but I'll exert no pressure on your body, <br /> with a direct approach you can never find victory, work laterally rather than literally.<br />Many choices; many paths. each must decide; or face their wrath  <br /><br /><br /> Click on a pillar to investigate"
       document.getElementById("Riddle").style.display = "none"
       document.getElementById("Answer").style.display = "none"
-      
-      document.getElementById("answerButton").onclick = 
-      function (params) {
-        str = document.getElementById("place").innerHTML;
-        AnswerKey = str.split(" ")[3].split(":")[0];
-        answer = Answers[AnswerKey];
-        choice = document.getElementById("select").value;
-        res = "Wrong!!";
-        if (answer == choice){
-          res = "Correct!!";
+
+      document.getElementById("answerButton").onclick =
+        function (params) {
+          str = document.getElementById("place").innerHTML;
+          AnswerKey = str.split(" ")[3].split(":")[0];
+          answer = Answers[AnswerKey];
+          choice = document.getElementById("select").value;
+          res = "Wrong!!";
+          if (answer == choice) {
+            res = "Correct!!";
+          }
+          document.getElementById("Result").innerHTML = res;
         }
-        document.getElementById("Result").innerHTML = res;
-      }
       //Get a reference to the link on the page
       // with an id of "mylink"
       window.onclick = e => {
-    
+
         if (e.target.id.includes("<br />")) {
 
-          
+
           if (!(e.target.title == "1")) {
             document.getElementById("place").innerHTML = "Riddle of column " + e.target.title + ":"
             document.getElementById("Riddle").innerHTML = e.target.id
             document.getElementById("instruct").style.display = "none"
-            document.getElementById("Riddle").style.display= "flex"
-      document.getElementById("Answer").style.display = "inline"
-      document.getElementById("Result").innerHTML =""
-      
+            document.getElementById("Riddle").style.display = "flex"
+            document.getElementById("Answer").style.display = "inline"
+            document.getElementById("Result").innerHTML = ""
+
 
             //generate select options
 
@@ -110,7 +110,7 @@
             document.getElementById("instruct").style.display = "block"
             document.getElementById("Riddle").style.display = "none"
             document.getElementById("Answer").style.display = "none"
-            
+
           }
 
         }
@@ -144,6 +144,7 @@
       align-items: center;
       text-align: center;
     }
+
     #instruct {
       height: 40vh;
       display: flex;
@@ -214,16 +215,20 @@
   </div>
   <div id="information">
     <h1 id="place">Riddle of the stones:</h1><br />
-    <div id ="instruct"></div>
+    <div id="instruct"></div>
     <div id="Riddle"></div>
     <div id="Answer">
       <h3>Answer</h3>
       <select id="select"></select>
-      <button id = "answerButton">Select</button>
+      <button id="answerButton">Select</button>
       <br /> <br /><br />
-      <span id = "Result" style="text-align: center;"></span>
+      <span id="Result" style="text-align: center;"></span>
+      
 
     </div>
+    <div id="bottom" style="position:absolute; bottom: 2%;"> Return to <a href="index.html">Code Experiments</a></div>
+  </div>
+
 </body>
 
 </html>
