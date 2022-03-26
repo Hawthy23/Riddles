@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+  <script src="check.js"></script>
+</head>
+
+<body>
+
+  <script>
+    var config = {
+      type: Phaser.AUTO,
+      width: 800,
+      height: 600,
+      physics: {
+        default: 'arcade',
+        arcade: {
+          gravity: { y: 200 }
+        }
+      },
+      scene: {
+        preload: preload,
+        create: create
+      }
+    };
+
+
+    var game = new Phaser.Game(config);
+    match = false
+
+
+
+    function preload() {
+
+      this.load.unityAtlas('foods', 'images/Food.png', 'images/Food.png.meta');
+      this.load.image('sky', 'http://labs.phaser.io/assets/skies/space3.png');
+      this.load.image('logo', 'http://labs.phaser.io/assets/sprites/phaser3-logo.png');
+
+    }
+    scaling = 3
+
+    rowNum = 7
+    columnNum = 7
+
+
+    function swap(gameObjectx, gameObjecty, pointer, ri, ci) {
+      
+      xchange = gameObjectx - pointer.worldX
+      ychange = gameObjecty - pointer.worldY
+      xdir = ""
+      ydir = ""
+      dir = ""
+      original = { "row": ri, "column": ci }
+      swapTo = { "row": ri, "column": ci }
+      if (xchange > 0) { xdir = "left" }
+      else { xdir = "right" }
+
+      if (ychange > 0) { ydir = "up" }  else { ydir = "down" }
+
+      console.log("x movement " +xchange + "\n y movement" + ychange  )
+
+      if (Math.abs(xchange) > Math.abs(ychange)) { dir = xdir }  else { dir = ydir }
+
+      if (dir == "left") swapTo = { "row": ri, "column": ci - 1 };
+      if (dir == "right") swapTo = { "row": ri, "column": ci + 1 }
+      if (dir == "up")swapTo = { "row": ri - 1, "column": ci }
+      if (dir == "down")swapTo = { "row": ri + 1, "column": ci }
+  
+      console.log("x movement " +xchange + "\n y movement" + ychange +  "\nDirectionSwapped: " + dir)
+
+      if (swapTo.row < 0 || swapTo.row >= rowNum) { console.log("not a valid move") }
+      if (swapTo.column < 0 || swapTo.column >= columnNum) { console.log("not a valid move") }
+      else {
+        console.log("swapping (" + original.row + "," + original.column + ")" + map[original.row][original.column] + " with (" + swapTo.row + "," + swapTo.column + ")" + map[swapTo.row][swapTo.column])
+        //this map array's Pointless 
+        //updating map array
+
+        
+
+        originalName = "r"+original.row + "c" + original.column
+        swapToName =  "r"+swapTo.row + "c" + swapTo.column
+        one = map[original.row][original.column]
+        two = map[swapTo.row][swapTo.column]
+        map[original.row][original.column] = two
+        map[swapTo.row][swapTo.column] = one
+        
+        ori = check(original.row,original.column)
+        swa = check(swapTo.row,swapTo.column)
+        
+        if ((ori).includes("no match found") & (swa).includes("no match found"))  {
+          map[swapTo.row][swapTo.column] = one
+          map[original.row][original.column] = two
+          console.log("Invalid Move!")
+          return
+         } 
+
+        sprites.forEach(s => {
+        if (s.name == originalName)
+          s.setTexture('foods', two)
+        });
+        
+        sprites.forEach(s => {
+        if (s.name == swapToName)
+          s.setTexture('foods', one)
+        });
+        
+        
+      }
+      console.log(map)
+
+    
+
+      //click and drag in a direction 
+      //it's in cordinates = {0,0}
+
+
+    }
+
+
+    function create() {
+      this.add.image(400, 300, 'sky');
+      this.add.image(400, 100, 'logo');
+      //this.add.image(200, 200, 'foods' ,'Cookie').setScale(scaling);
+
+      choices = ['Apple', 'Bread', 'Eggs', 'Fish', 'Pretzel'];
+      min = 0;
+      max = choices.length - 1;
+      //create storage array -- 7*10
+      //[ [],[],[] ]
+      //[ [],[],[] ]
+      map = [];
+      for (let ri = 0; ri < rowNum; ri++) {
+
+        map.push([]);
+      }
+
+
+      for (let ri = 0; ri < rowNum; ri++) {
+        for (let ci = 0; ci < columnNum; ci++) {
+          map[ri].push([]);
+        }
+
+
+      }
+
+      for (let ci = 0; ci < columnNum; ci++) {
+        for (let ri = 0; ri < rowNum; ri++) {
+
+          a = Math.floor(Math.random() * (max - min + 1)) + min;
+          map[ri][ci] = choices[a]
+        }
+      }
+
+      
+
+      //display the images in the array 
+      //sprite size is 16x16
+      size = 16 * scaling;
+      padding = 10;
+      startx = 200;
+      starty = 200;
+
+      sprites = []
+      for (let ri = 0; ri < rowNum; ri++) {
+        for (let ci = 0; ci < columnNum; ci++) {
+          sprite = this.add.sprite(starty + ((size + padding) * ci + 1), startx + ((size + padding) * ri + 1), 'foods', map[ri][ci]).setScale(scaling).setInteractive();
+          namestr = "r"+ri+"c"+ci
+          sprite.name = namestr
+          sprites.push(sprite)
+          sprite.setData({ row: ri, column: ci });
+          this.input.setDraggable(sprite);
+          this.input.dragDistanceThreshold = size * .5;
+          //--- so many event triggers
+          sprite.on('dragstart', function (pointer, dragX, dragY) {
+            swap(this.x, this.y, pointer, ri, ci)
+          });
+          this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+
+          });
+          sprite.on('pointerup', function (pointer, gameObject) {
+            //swapEnd(gameObject.x, gameObject.y, pointer, ri, ci)
+          });
+          sprite.on('pointerdown', function (pointer,) {
+            
+            //str = check(ri, ci);
+            console.log("row: " + (ri) + "\n" + "column: " + (ci) + "\n" )
+            console.log("row: " + this.getData('row'))
+          });
+
+        }
+      }
+      
+     
+      console.log(sprites)
+
+      match = ""
+      for (let ci = 0; ci < columnNum; ci++) {
+        for (let ri = 0; ri < rowNum; ri++) {
+
+          str = check(ri, ci);
+          if (str.includes("no match found")) { } else { match = match + str }
+
+
+        }
+      }
+      console.log(match)
+    }
+
+
+
+  </script>
+
+</body>
+
+</html>
