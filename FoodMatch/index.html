@@ -3,7 +3,9 @@
 
 <head>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+  <script src="spriteControl.js"></script>
   <script src="check.js"></script>
+
 </head>
 
 <body>
@@ -32,180 +34,184 @@
 
 
     function preload() {
-
+      //spritesheet for swapable ones. 
       this.load.unityAtlas('foods', 'images/Food.png', 'images/Food.png.meta');
+
+      //background 
       this.load.image('sky', 'http://labs.phaser.io/assets/skies/space3.png');
       this.load.image('logo', 'http://labs.phaser.io/assets/sprites/phaser3-logo.png');
 
     }
-    scaling = 3
+    //adjustable global variables. 
+    //for the grid of swapable. 
+    //scaling is the scale of individual sprites
+    //startx+y is coordinates of r1c1; not including padding. 
+    scaling = 3;
+    rowNum = 7;
+    columnNum = 7;
+    spriteSize = 16;
+    padding = 10;
+    startx = 200;
+    starty = 200;
 
-    rowNum = 7
-    columnNum = 7
 
+    //determine direction moved 
+    function dirCheck(gameObjectx, gameObjecty, pointer, ri, ci) {
+      xchange = gameObjectx - pointer.worldX;
+      ychange = gameObjecty - pointer.worldY;
+      xdir = "";
+      ydir = "";
+      dir = "";
 
-    function swap(gameObjectx, gameObjecty, pointer, ri, ci) {
-      
-      xchange = gameObjectx - pointer.worldX
-      ychange = gameObjecty - pointer.worldY
-      xdir = ""
-      ydir = ""
-      dir = ""
-      original = { "row": ri, "column": ci }
-      swapTo = { "row": ri, "column": ci }
-      if (xchange > 0) { xdir = "left" }
-      else { xdir = "right" }
+      //determine which horizontal/vertical is more. 
+      if (xchange > 0) { xdir = "left"; } else { xdir = "right"; }
+      if (ychange > 0) { ydir = "up"; } else { ydir = "down"; }
 
-      if (ychange > 0) { ydir = "up" }  else { ydir = "down" }
+      //console.log("x movement " + xchange + "\n y movement" + ychange);
 
-      console.log("x movement " +xchange + "\n y movement" + ychange  )
+      //which direction has more movement (allows for mouse wiggle in non-dominate direction)
+      if (Math.abs(xchange) > Math.abs(ychange)) { dir = xdir } else { dir = ydir };
+      return dir;
 
-      if (Math.abs(xchange) > Math.abs(ychange)) { dir = xdir }  else { dir = ydir }
+    }
 
+    //checks for direction swapped, then looks for a match, and if a match is found, it changes the sprite & map data
+    function swap(gameObjectx, gameObjecty, pointer, ri, ci) { 
+      //what direction. 
+      dir = dirCheck(gameObjectx, gameObjecty, pointer, ri, ci);
+
+      original = { "row": ri, "column": ci };
+      swapTo = { "row": ri, "column": ci };
+
+      //cordinates of non-clicked sprite. 
       if (dir == "left") swapTo = { "row": ri, "column": ci - 1 };
-      if (dir == "right") swapTo = { "row": ri, "column": ci + 1 }
-      if (dir == "up")swapTo = { "row": ri - 1, "column": ci }
-      if (dir == "down")swapTo = { "row": ri + 1, "column": ci }
-  
-      console.log("x movement " +xchange + "\n y movement" + ychange +  "\nDirectionSwapped: " + dir)
+      if (dir == "right") swapTo = { "row": ri, "column": ci + 1 };
+      if (dir == "up") swapTo = { "row": ri - 1, "column": ci };
+      if (dir == "down") swapTo = { "row": ri + 1, "column": ci };
 
-      if (swapTo.row < 0 || swapTo.row >= rowNum) { console.log("not a valid move") }
-      if (swapTo.column < 0 || swapTo.column >= columnNum) { console.log("not a valid move") }
+      //swapping out of bounds.      
+      if (swapTo.row < 0 || swapTo.row >= rowNum) { console.log("not a valid move"); }
+      if (swapTo.column < 0 || swapTo.column >= columnNum) { console.log("not a valid move"); }
       else {
-        console.log("swapping (" + original.row + "," + original.column + ")" + map[original.row][original.column] + " with (" + swapTo.row + "," + swapTo.column + ")" + map[swapTo.row][swapTo.column])
-        //this map array's Pointless 
-        //updating map array
+        console.log("swapping (" + original.row + "," + original.column + ")" + map[original.row][original.column] + " with (" + swapTo.row + "," + swapTo.column + ")" + map[swapTo.row][swapTo.column]);
 
+
+        //figure out sprite names
+        originalName = "r" + original.row + "c" + original.column
+        swapToName = "r" + swapTo.row + "c" + swapTo.column
         
+        //getting values from pre-swap.
+        one = map[original.row][original.column];
+        two = map[swapTo.row][swapTo.column];
 
-        originalName = "r"+original.row + "c" + original.column
-        swapToName =  "r"+swapTo.row + "c" + swapTo.column
-        one = map[original.row][original.column]
-        two = map[swapTo.row][swapTo.column]
+        //changes stored info.  Needed for proper checking in check()
         map[original.row][original.column] = two
         map[swapTo.row][swapTo.column] = one
-        
-        ori = check(original.row,original.column)
-        swa = check(swapTo.row,swapTo.column)
-        
-        if ((ori).includes("no match found") & (swa).includes("no match found"))  {
-          map[swapTo.row][swapTo.column] = one
-          map[original.row][original.column] = two
+        frameChange(originalName, two)
+        frameChange(swapToName, one)
+        //is it a valid swap?
+        ori = swapCheck(original.row, original.column)
+        swa = swapCheck(swapTo.row, swapTo.column)
+        console.log("response from moved one!")
+        console.log(swa.message)
+        //console.log("dragged one " +  ori)
+        //console.log("one that moved "+ swa)
+        //stops if the swap would result in No Match & reverts the map info. 
+        if (ori.message.includes("no match found") & swa.message.includes("no match found")) {
+          map[swapTo.row][swapTo.column] = two
+          map[original.row][original.column] = one
+          frameChange(originalName, one)
+        frameChange(swapToName, two)
           console.log("Invalid Move!")
-          return
-         } 
+          return 
+        }
+        
+        falling()
+        
+        
+       
 
-        sprites.forEach(s => {
-        if (s.name == originalName)
-          s.setTexture('foods', two)
-        });
-        
-        sprites.forEach(s => {
-        if (s.name == swapToName)
-          s.setTexture('foods', one)
-        });
-        
-        
+
       }
-      console.log(map)
-
-    
-
-      //click and drag in a direction 
-      //it's in cordinates = {0,0}
-
-
     }
 
 
     function create() {
       this.add.image(400, 300, 'sky');
       this.add.image(400, 100, 'logo');
-      //this.add.image(200, 200, 'foods' ,'Cookie').setScale(scaling);
 
+      //setup for random sprites. 
       choices = ['Apple', 'Bread', 'Eggs', 'Fish', 'Pretzel'];
       min = 0;
       max = choices.length - 1;
-      //create storage array -- 7*10
-      //[ [],[],[] ]
-      //[ [],[],[] ]
+
+      //faking a 2d array with an array of arrays. 
       map = [];
       for (let ri = 0; ri < rowNum; ri++) {
-
         map.push([]);
       }
-
-
       for (let ri = 0; ri < rowNum; ri++) {
         for (let ci = 0; ci < columnNum; ci++) {
           map[ri].push([]);
         }
-
-
       }
 
+      //assigning random value to the array. 
       for (let ci = 0; ci < columnNum; ci++) {
         for (let ri = 0; ri < rowNum; ri++) {
-
           a = Math.floor(Math.random() * (max - min + 1)) + min;
           map[ri][ci] = choices[a]
         }
       }
 
-      
+
 
       //display the images in the array 
-      //sprite size is 16x16
-      size = 16 * scaling;
-      padding = 10;
-      startx = 200;
-      starty = 200;
+      size = spriteSize * scaling;
 
+      //makes sprite accessable by name later
       sprites = []
       for (let ri = 0; ri < rowNum; ri++) {
         for (let ci = 0; ci < columnNum; ci++) {
+          //creates sprites & displays in array using scaling, etc (vars defined at the start)
           sprite = this.add.sprite(starty + ((size + padding) * ci + 1), startx + ((size + padding) * ri + 1), 'foods', map[ri][ci]).setScale(scaling).setInteractive();
-          namestr = "r"+ri+"c"+ci
+          namestr = "r" + ri + "c" + ci
           sprite.name = namestr
           sprites.push(sprite)
           sprite.setData({ row: ri, column: ci });
+          
+          //all for dragging trigger. Doesn't visibly drag the sprite, but uses "mouse drag" to measure direction.   
           this.input.setDraggable(sprite);
           this.input.dragDistanceThreshold = size * .5;
-          //--- so many event triggers
           sprite.on('dragstart', function (pointer, dragX, dragY) {
             swap(this.x, this.y, pointer, ri, ci)
           });
           this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
 
           });
-          sprite.on('pointerup', function (pointer, gameObject) {
-            //swapEnd(gameObject.x, gameObject.y, pointer, ri, ci)
-          });
-          sprite.on('pointerdown', function (pointer,) {
-            
-            //str = check(ri, ci);
-            console.log("row: " + (ri) + "\n" + "column: " + (ci) + "\n" )
-            console.log("row: " + this.getData('row'))
-          });
+        }
+      }
 
+      //initial match check
+      match = ""
+      elements = []
+      for (let ci = 0; ci < columnNum; ci++) {
+        for (let ri = 0; ri < rowNum; ri++) {
+         str = swapCheck(ri, ci);
+         
+         if (str.message.includes("no match found")) { } else {
+           elements.push(str.elements)
+           //match = `a ${str.type} Match at r${ri+1}c${ci+1}!\n${str.message}\n${str.elements}`     
+        
         }
       }
       
-     
-      console.log(sprites)
-
-      match = ""
-      for (let ci = 0; ci < columnNum; ci++) {
-        for (let ri = 0; ri < rowNum; ri++) {
-
-          str = check(ri, ci);
-          if (str.includes("no match found")) { } else { match = match + str }
-
-
-        }
-      }
-      console.log(match)
     }
+    uniqueAffected = []
+    console.log("End Result!!---- ")
+    console.log(elements)
+
+  }
 
 
 
