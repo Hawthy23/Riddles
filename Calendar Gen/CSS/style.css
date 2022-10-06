@@ -1,0 +1,32 @@
+td {
+    height: 90px;
+    width: 90px;
+  
+}
+table,tr,td {
+    border: 1px solid;
+}
+#Calendar {
+    float: left;
+    padding: 2%;
+    background-color: antiquewhite;
+}
+
+button,h1{
+    margin: 0%;
+    display: inline-block;
+}
+#nav{
+    text-align: center;
+}
+h1{
+    width: inherit;
+    text-align: center;
+
+}
+.right{
+float: right;
+}
+.left{
+    float: left;
+    }
