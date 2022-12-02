@@ -2,3 +2,5 @@
 
 <a href="https://hawthy23.github.io/Riddles/RuinsMap.html"> Riddle of the Pillars </a>
          <p>a set of riddles with unusual items. Uses imagemap, srollable divs, and dynamically creates options in a select </p>
+DisneyMaps/allMaps.html
+<a href="https://hawthy23.github.io/Riddles/DisneyMaps/allMaps.html"> history of Disney through Maps  </a>
