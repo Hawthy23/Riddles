@@ -65,6 +65,7 @@ function calendarGen(month, day, date, year) {
     if (temp < 0)
         startDay = 7 + temp
     else startDay = temp
+
     ChosenData["1st"] = startDay
     ChosenData["month"] = month
     ChosenData["year"] = year
@@ -140,7 +141,7 @@ function nextMonth() {
     tdays = totalDays(ChosenData["month"])
     lastDOW = ChosenData["1st"]
     //turns out this chunk is not actually needed; using js's built in date display.... 
-    /*var lastDay
+    var lastDay
     switch (tdays) {
         case 30:
             lastDay = lastDOW +1
@@ -170,7 +171,6 @@ function nextMonth() {
             lastDay = lastDOW 
             break;
     }
-*/
 
 
 //month & year calculations. 
